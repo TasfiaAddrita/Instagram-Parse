@@ -118,8 +118,8 @@
 		C9D6E6711C8A83B80043F937 /* Instagram-Parse */ = {
 			isa = PBXGroup;
 			children = (
-				C957D6CB1C8CCC480062943F /* Cells */,
 				C9D6E6721C8A83B80043F937 /* AppDelegate.swift */,
+				C957D6CB1C8CCC480062943F /* Cells */,
 				C957D6C21C8AA2840062943F /* Views */,
 				C957D6BF1C8AA1AE0062943F /* View Controllers */,
 				C9D6E6761C8A83B80043F937 /* Main.storyboard */,

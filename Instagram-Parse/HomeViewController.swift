@@ -26,7 +26,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let image: UIImage = UIImage(named: "momentsLogo_smaller.png")!
         self.navigationItem.titleView = UIImageView(image: image)
         
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadList:", name: "uploadPhoto", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadList:", name: "uploadPhoto", object: nil)
         
         // Do any additional setup after loading the view.

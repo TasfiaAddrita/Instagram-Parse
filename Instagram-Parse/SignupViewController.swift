@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class SignupViewController: UIViewController {
 
@@ -91,13 +92,33 @@ class SignupViewController: UIViewController {
         animateLayer()
     }
     
+    @IBAction func onCancel(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func onSignUp(sender: AnyObject) {
+        
+        let newUser = PFUser()
+        
+        // set user properties
+        newUser.username = usernameTextField.text
+        newUser.password = passwordTextField.text
+        
+        newUser.signUpInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            
+            if success {
+                print("Yay, created a user")
+                self.performSegueWithIdentifier("signupSegue", sender: nil)
+            } else {
+                print("error: \(error?.localizedDescription)")
+            }
+            
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func onCancel(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
     }
 
     /*

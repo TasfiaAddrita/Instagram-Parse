@@ -46,6 +46,8 @@
                                 </state>
                                 <connections>
                                     <action selector="onSignIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wl9-NS-41R"/>
+                                    <action selector="onSignUp:" destination="ygM-y6-4zT" eventType="touchUpInside" id="vnA-8n-NTa"/>
+                                    <segue destination="jS5-ow-xTB" kind="presentation" identifier="signupSegue" id="lzh-lL-c6k"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -69,7 +71,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="foH-k3-mhu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="776" y="1057"/>
+            <point key="canvasLocation" x="380" y="1057"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -93,7 +95,7 @@
                                 <rect key="frame" x="20" y="288" width="280" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ARJ-NV-xhl">
                                 <rect key="frame" x="0.0" y="523" width="320" height="45"/>
@@ -271,6 +273,17 @@
                     <view key="view" contentMode="scaleToFill" id="KaE-3E-Zkd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dvp-Tb-UIK">
+                                <rect key="frame" x="20" y="72" width="60" height="60"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bD0-x3-YQn">
+                                <rect key="frame" x="20" y="140" width="45" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="k1G-3b-Pc2">
@@ -282,6 +295,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="nameLabel" destination="bD0-x3-YQn" id="24L-F9-JXI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0n3-1I-4Ld" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -321,6 +337,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0" green="0.25490196079999999" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -348,7 +367,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oKL-x8-o0t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="380" y="1057"/>
+            <point key="canvasLocation" x="3" y="1057"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1fs-6y-Qov">
@@ -382,4 +401,7 @@
         <image name="home" width="30" height="26"/>
         <image name="profile" width="35" height="35"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="X9J-VR-UGe"/>
+    </inferredMetricsTieBreakers>
 </document>

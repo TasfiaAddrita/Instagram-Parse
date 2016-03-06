@@ -11,8 +11,12 @@ import Parse
 
 class UserProfileViewController: UIViewController {
 
+    @IBOutlet weak var nameLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.navigationController?.navigationBar.topItem?.title = "\(PFUser.currentUser()!.username!)"
 
         // Do any additional setup after loading the view.
     }

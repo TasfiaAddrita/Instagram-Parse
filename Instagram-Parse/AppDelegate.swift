@@ -13,7 +13,7 @@ import Parse
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -25,6 +25,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 configuration.server = "https://intense-inlet-31603.herokuapp.com/parse"
             })
         )
+        
+        if PFUser.currentUser() != nil {
+            let vc = self.storyboard.instantiateViewControllerWithIdentifier("HomeTabController")
+            self.window?.rootViewController = vc
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserverForName("UserDidLogout", object: nil, queue: NSOperationQueue.mainQueue()) { (NSNotification) -> Void in
+            
+                let vc = self.storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as UIViewController
+                self.window?.rootViewController = vc
+            }
         
         return true
     }

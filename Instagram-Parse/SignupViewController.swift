@@ -1,19 +1,19 @@
 //
-//  LoginViewController.swift
+//  SignupViewController.swift
 //  Instagram-Parse
 //
-//  Created by Tasfia Addrita on 3/4/16.
+//  Created by Tasfia Addrita on 3/5/16.
 //  Copyright © 2016 Tasfia Addrita. All rights reserved.
 //
 
 import UIKit
-import Parse
 
-class LoginViewController: UIViewController {
+class SignupViewController: UIViewController {
 
+    @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var logoImageView: UIImageView!
     
     var gradient : CAGradientLayer?
     var fromColors : AnyObject?
@@ -22,9 +22,13 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        logoImageView.image = UIImage(named: "momentsLogo.png")
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.translucent = true
         
-        //usernameTextField.backgroundColor = UIColor.clearColor()
+        nameTextField.attributedPlaceholder = NSAttributedString(string: "Full Name",
+            attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+        nameTextField.textColor = UIColor.whiteColor()
         
         usernameTextField.attributedPlaceholder = NSAttributedString(string: "Username",
             attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
@@ -34,13 +38,9 @@ class LoginViewController: UIViewController {
             attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
         passwordTextField.textColor = UIColor.whiteColor()
         
-//        var frameRect: CGRect = usernameTextField.frame
-//        frameRect.size.height = 100
-//        usernameTextField.frame = frameRect
-        
         // Do any additional setup after loading the view.
     }
-
+    
     override func viewDidAppear(animated: Bool) {
         
         self.gradient = CAGradientLayer()
@@ -75,7 +75,6 @@ class LoginViewController: UIViewController {
         animation.delegate = self
         animation.fromValue = fromColors
         animation.toValue = toColors
-        //animation.duration = 3.00
         animation.duration = 5.00
         animation.removedOnCompletion = true
         animation.fillMode = kCAFillModeForwards
@@ -97,40 +96,10 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func onSignIn(sender: AnyObject) {
-        PFUser.logInWithUsernameInBackground(usernameTextField.text!, password: passwordTextField.text!)
-            { (user: PFUser?, error: NSError?) -> Void in
-                
-                if user != nil {
-                    print("You're logged in")
-                    self.performSegueWithIdentifier("loginSegue", sender: nil)
-                }
-            
-            }
+    @IBAction func onCancel(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 
-    /*@IBAction func onSignUp(sender: AnyObject) {
-        
-        let newUser = PFUser()
-        
-        // set user properties
-        newUser.username = usernameTextField.text
-        newUser.password = passwordTextField.text
-        
-        newUser.signUpInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            
-            if success {
-                print("Yay, created a user")
-                self.performSegueWithIdentifier("loginSegue", sender: nil)
-            } else {
-                print("error: \(error?.localizedDescription)")
-            }
-            
-        }
-        
-    }*/
-    
-    
     /*
     // MARK: - Navigation
 

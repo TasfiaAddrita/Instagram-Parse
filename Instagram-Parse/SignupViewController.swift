@@ -12,7 +12,7 @@ import Parse
 class SignupViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var userImageView: UIImageView!
-    @IBOutlet weak var nameTextField: UITextField!
+    //@IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
@@ -29,11 +29,11 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
         
-        userImageView.image = UIImage(named: "addProfileImage.png")
+        //userImageView.image = UIImage(named: "addProfileImage.png")
         
-        nameTextField.attributedPlaceholder = NSAttributedString(string: "Full Name",
+        /*nameTextField.attributedPlaceholder = NSAttributedString(string: "Full Name",
             attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
-        nameTextField.textColor = UIColor.whiteColor()
+        nameTextField.textColor = UIColor.whiteColor()*/
         
         usernameTextField.attributedPlaceholder = NSAttributedString(string: "Username",
             attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
@@ -120,7 +120,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
-    @IBAction func onUploadProfileImage(sender: AnyObject) {
+    /*@IBAction func onUploadProfileImage(sender: AnyObject) {
         pickImage.delegate = self
         pickImage.allowsEditing = true
         pickImage.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
@@ -156,6 +156,17 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         return newImage
     }
     
+    func getPFFileFromImage(image: UIImage?) -> PFFile? {
+        // check if image is not nil
+        if let image = image {
+            // get image data and check if that is not nil
+            if let imageData = UIImagePNGRepresentation(image) {
+                return PFFile(name: "image.png", data: imageData)
+            }
+        }
+        return nil
+    }*/
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -171,28 +182,4 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     */
 
-}
-
-class UserImage: NSObject {
-
-    class func postUserImage(image: UIImage?, withCompletion completion: PFBooleanResultBlock?) {
-        // Create Parse object PFObject
-        let userImage = PFObject(className: "UserImage")
-        
-        // Add relevant fields to the object
-        userImage["userimage"] = getPFFileFromImage(image)
-        
-    }
-    
-    class func getPFFileFromImage(image: UIImage?) -> PFFile? {
-        // check if image is not nil
-        if let image = image {
-            // get image data and check if that is not nil
-            if let imageData = UIImagePNGRepresentation(image) {
-                return PFFile(name: "image.png", data: imageData)
-            }
-        }
-        return nil
-    }
-    
 }

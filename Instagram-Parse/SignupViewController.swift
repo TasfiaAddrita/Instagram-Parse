@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class SignupViewController: UIViewController {
+class SignupViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
@@ -20,12 +20,16 @@ class SignupViewController: UIViewController {
     var fromColors : AnyObject?
     var toColors : AnyObject?
     
+    let pickImage = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
+        
+        userImageView.image = UIImage(named: "addProfileImage.png")
         
         nameTextField.attributedPlaceholder = NSAttributedString(string: "Full Name",
             attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
@@ -116,6 +120,42 @@ class SignupViewController: UIViewController {
         }
     }
     
+    @IBAction func onUploadProfileImage(sender: AnyObject) {
+        pickImage.delegate = self
+        pickImage.allowsEditing = true
+        pickImage.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        
+        self.presentViewController(pickImage, animated: true, completion: nil)
+        
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        // Get the image captured by the UIImagePickerController
+        let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+        
+        // Do something with the images (based on your use case)
+        //uploadPhotoImageView.image = editedImage
+        let size = CGSize(width: 320, height: 320)
+        userImageView.image = resize(editedImage, newSize: size)
+        
+        // Dismiss UIImagePickerController to go back to your original view controller
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func resize(image: UIImage, newSize: CGSize) -> UIImage {
+        let resizeImageView = UIImageView(frame: CGRectMake(0, 0, newSize.width, newSize.height))
+        resizeImageView.contentMode = UIViewContentMode.ScaleAspectFill
+        resizeImageView.image = image
+        
+        UIGraphicsBeginImageContext(resizeImageView.frame.size)
+        resizeImageView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -131,4 +171,28 @@ class SignupViewController: UIViewController {
     }
     */
 
+}
+
+class UserImage: NSObject {
+
+    class func postUserImage(image: UIImage?, withCompletion completion: PFBooleanResultBlock?) {
+        // Create Parse object PFObject
+        let userImage = PFObject(className: "UserImage")
+        
+        // Add relevant fields to the object
+        userImage["userimage"] = getPFFileFromImage(image)
+        
+    }
+    
+    class func getPFFileFromImage(image: UIImage?) -> PFFile? {
+        // check if image is not nil
+        if let image = image {
+            // get image data and check if that is not nil
+            if let imageData = UIImagePNGRepresentation(image) {
+                return PFFile(name: "image.png", data: imageData)
+            }
+        }
+        return nil
+    }
+    
 }

@@ -12,6 +12,7 @@ import Parse
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+
     
     var posts: [PFObject]!
     
@@ -26,7 +27,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let image: UIImage = UIImage(named: "momentsLogo_smaller.png")!
         self.navigationItem.titleView = UIImageView(image: image)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadList:", name: "uploadPhoto", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadList:", name: "load", object: nil)
+        tableView.reloadData()
         
         // Do any additional setup after loading the view.
     }
@@ -38,8 +40,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func getPosts() {
         let query = PFQuery(className: "Post")
-        query.orderByDescending("_created_at")
-        query.includeKey("_p_author")
+        query.orderByDescending("createdAt")
+        query.includeKey("author")
         query.limit = 20
         query.findObjectsInBackgroundWithBlock { (results: [PFObject]?, error: NSError?) -> Void in
             if error == nil {
@@ -50,7 +52,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 print(error)
             }
         }
-        
     }
     
     func loadList(notification: NSNotification) {

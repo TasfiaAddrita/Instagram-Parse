@@ -13,18 +13,32 @@ class HomeTableViewCell: UITableViewCell {
 
     @IBOutlet weak var postedImageView: UIImageView!
     @IBOutlet weak var captionLabel: UILabel!
+    @IBOutlet weak var userProfileImageView: UIImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var username2Label: UILabel!
     
     var getPhotoAndCaption: PFObject! {
         
         didSet {
-            captionLabel.text = getPhotoAndCaption["caption"] as? String
             
-            if let postedImageView = getPhotoAndCaption["media"] as? PFFile {
-                postedImageView.getDataInBackgroundWithBlock({ (imageData: NSData?, error: NSError?) -> Void in
+            self.captionLabel.text = getPhotoAndCaption["caption"] as? String
+            self.usernameLabel.text = PFUser.currentUser()?.username
+            self.username2Label.text = PFUser.currentUser()?.username
+            
+            if let profileImageView = getPhotoAndCaption["userimage"] as? PFFile {
+                profileImageView.getDataInBackgroundWithBlock { (imageData: NSData?, error: NSError?) -> Void in
                     if (error == nil) {
                         self.postedImageView.image = UIImage(data:imageData!)
                     }
-                })
+                }
+            }
+            
+            if let postedImageView = getPhotoAndCaption["media"] as? PFFile {
+                postedImageView.getDataInBackgroundWithBlock { (imageData: NSData?, error: NSError?) -> Void in
+                    if (error == nil) {
+                        self.postedImageView.image = UIImage(data:imageData!)
+                    }
+                }
             }
         }
     }

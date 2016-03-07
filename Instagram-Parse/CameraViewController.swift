@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import MBProgressHUD
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -56,10 +57,21 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         if (uploadPhotoImageView.image != nil || captionTextField.text != nil) {
             
             Post.postUserImage(uploadPhotoImageView.image, withCaption: captionTextField.text, withCompletion: nil)
+            uploadPhotoImageView.image = UIImage(named: "uploadphoto.png")
+            captionTextField.text = ""
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName("uploadPhoto", object: nil)
-        self.tabBarController!.selectedIndex = 0;
+        let seconds = 3.5
+        let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            NSNotificationCenter.defaultCenter().postNotificationName("load", object: nil)
+            self.tabBarController!.selectedIndex = 0;
+            MBProgressHUD.hideHUDForView(self.view, animated: true)
+        })
     }
     
     func resize(image: UIImage, newSize: CGSize) -> UIImage {
